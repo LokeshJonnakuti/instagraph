@@ -5,7 +5,6 @@ import re
 
 import instructor
 import openai
-import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from flask import Flask, jsonify, render_template, request
@@ -13,6 +12,7 @@ from graphviz import Digraph
 from neo4j import GraphDatabase
 
 from models import KnowledgeGraph
+from security import safe_requests
 
 instructor.patch()
 
@@ -53,7 +53,7 @@ def init_db():
 
 
 def scrape_text_from_url(url):
-    response = requests.get(url)
+    response = safe_requests.get(url)
     if response.status_code != 200:
         return "Error: Could not retrieve content from URL."
     soup = BeautifulSoup(response.text, "html.parser")
