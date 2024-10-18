@@ -53,7 +53,7 @@ def init_db():
 
 
 def scrape_text_from_url(url):
-    response = requests.get(url)
+    response = requests.get(url, timeout=60)
     if response.status_code != 200:
         return "Error: Could not retrieve content from URL."
     soup = BeautifulSoup(response.text, "html.parser")
